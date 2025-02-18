@@ -1,10 +1,14 @@
+import axios from 'axios'
+import { ProxyAgent } from 'proxy-agent'
 import {
   defineConfig,
   presetAttributify,
   presetIcons,
-  presetUno,
   presetWebFonts,
+  presetWind3,
 } from 'unocss'
+
+const agent = new ProxyAgent()
 
 export default defineConfig({
   shortcuts: [
@@ -12,13 +16,16 @@ export default defineConfig({
     ['icon-btn', 'text-[0.9em] inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-teal-600 !outline-none'],
   ],
   presets: [
-    presetUno(),
+    presetWind3(),
     presetAttributify(),
     presetIcons({
       scale: 1.2,
       warn: true,
     }),
     presetWebFonts({
+      // use axios with an https proxy
+      customFetch: (url: string) => axios.get(url, { httpAgent: agent }).then(it => it.data),
+      provider: 'google',
       fonts: {
         sans: 'DM Sans',
         serif: 'DM Serif Display',
