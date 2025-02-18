@@ -65,4 +65,13 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
   },
+
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3333', // Vite's default port
+        changeOrigin: true,
+      },
+    },
+  },
 })
