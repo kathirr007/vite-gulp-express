@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import axios from 'axios'
+// import axios from 'axios'
 
 onMounted(async () => {
-  const { data } = await axios.get('/api/items')
-  console.log(data)
+  // const { data } = await axios.get('/api/items')
+  // console.log(data)
+  // TODO: add api call to test backend
 })
 </script>
 

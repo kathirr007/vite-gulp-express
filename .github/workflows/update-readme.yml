@@ -1,0 +1,39 @@
+name: Update README
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
+  # push:
+    # branches: [ "master" ]
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up the script permission
+        run: chmod +x update_readme.sh
+
+      - name: Generate README content
+        id: generate_readme
+        run: |
+          # Your script to generate the README content goes here.
+          # This example uses a date command, but you would likely
+          # use a script to fetch data, process it, etc.
+          # echo "## Last Updated: $(date '+%Y-%m-%d')" >> README_TEMP.md #Create a temporary file
+          ./update_readme.sh
+          # Add more content as needed
+
+      - name: Commit files
+        run: |
+          git config --global user.email "kathirr007@gmail.com"
+          git config --global user.name "Kathiravan K"
+          git commit -a -m "Updated Readme"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }} # Or specify a branch if needed.
+          force: true # Set to true to force push, but use with caution.
