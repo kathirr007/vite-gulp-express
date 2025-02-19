@@ -69,7 +69,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000', // Vite's default port
+        target: 'http://localhost:5000', // Vite's default port
         changeOrigin: true,
       },
     },

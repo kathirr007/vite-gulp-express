@@ -2,17 +2,31 @@
   "name": "vite-gulp-express",
   "type": "module",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "author": "",
   "license": "ISC",
   "keywords": [],
   "main": "server/index.js",
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
+    "dev": "gulp dev",
+    "build": "gulp build",
+    "serve": "node server/index.js",
     "postinstall": "npx simple-git-hooks"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.3.0",
     "eslint": "^9.20.1",
+    "gulp": "^5.0.0",
     "lint-staged": "^15.4.3",
     "simple-git-hooks": "^2.11.1"
   },
@@ -20,7 +34,7 @@
     "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
-    "frontend/**/*.{js,ts,vue}": [
+    "frontend/**/*.{js,ts,vue},json": [
       "eslint --config frontend/eslint-config.js --cache --fix"
     ],
     "*.{js,ts,json}": [
