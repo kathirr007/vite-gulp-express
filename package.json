@@ -11,6 +11,8 @@
     "postinstall": "npx simple-git-hooks"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^4.3.0",
+    "eslint": "^9.20.1",
     "lint-staged": "^15.4.3",
     "simple-git-hooks": "^2.11.1"
   },
@@ -19,7 +21,10 @@
   },
   "lint-staged": {
     "frontend/**/*.{js,ts,vue}": [
-      "eslint --config frontend/eslint-config.js --fix"
+      "eslint --config frontend/eslint-config.js --cache --fix"
+    ],
+    "*.{js,ts,json}": [
+      "eslint --cache --fix"
     ]
   }
 }
