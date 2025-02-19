@@ -7,7 +7,8 @@
   "author": "",
   "license": "ISC",
   "keywords": [],
-  "main": "server/index.js",
+  "main": "server/index.mjs",
+  "types": "module",
   "workspaces": [
     "client",
     "server"
@@ -15,7 +16,7 @@
   "scripts": {
     "dev": "gulp dev",
     "build": "gulp build",
-    "serve": "node server/index.js",
+    "serve": "node server/index.mjs",
     "postinstall": "npx simple-git-hooks"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^4.3.0",
     "eslint": "^9.20.1",
+    "globals": "^15.15.0",
     "gulp": "^5.0.0",
     "lint-staged": "^15.4.3",
     "simple-git-hooks": "^2.11.1"

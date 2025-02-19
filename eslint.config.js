@@ -1,4 +1,5 @@
 import antfu from '@antfu/eslint-config'
+import globals from 'globals'
 
 export default antfu({
 
@@ -7,4 +8,5 @@ export default antfu({
     'no-console': 'off',
     'no-debugger': 'off',
   },
+  languageOptions: { globals: globals.node },
 })
