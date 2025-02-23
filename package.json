@@ -9,6 +9,17 @@
   "keywords": [],
   "main": "server/index.mjs",
   "types": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kathirr007/vite-gulp-express.git"
+  },
+  "keywords": ["getStart", "workFlow", "gulpWorkFlow"],
+  "author": "Kathirr007",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kathirr007/vite-gulp-express.git/issues"
+  },
+  "homepage": "https://github.com/kathirr007/vite-gulp-express.git#readme",
   "workspaces": [
     "client",
     "server"
