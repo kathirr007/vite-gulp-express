@@ -4,22 +4,23 @@
   "version": "1.0.0",
   "private": true,
   "description": "",
-  "author": "",
-  "license": "ISC",
-  "keywords": [],
-  "main": "server/index.mjs",
-  "types": "module",
+  "author": "Kathirr007",
+  "license": "MIT",
+  "homepage": "https://github.com/kathirr007/vite-gulp-express.git#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/kathirr007/vite-gulp-express.git"
   },
-  "keywords": ["getStart", "workFlow", "gulpWorkFlow"],
-  "author": "Kathirr007",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/kathirr007/vite-gulp-express.git/issues"
   },
-  "homepage": "https://github.com/kathirr007/vite-gulp-express.git#readme",
+  "keywords": [
+    "getStart",
+    "workFlow",
+    "gulpWorkFlow"
+  ],
+  "main": "server/index.mjs",
+  "types": "module",
   "workspaces": [
     "client",
     "server"
@@ -32,6 +33,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "cross-spawn": "^7.0.6",
     "express": "^4.21.2",
     "nodemon": "^3.1.9"
   },

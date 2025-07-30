@@ -1,10 +1,10 @@
-import childProcess from 'node:child_process'
+import spawn from 'cross-spawn'
 import gulp from 'gulp'
 
 // Development task (runs client dev server and Express server concurrently)
 gulp.task('dev', (cb) => {
-  const clientProcess = childProcess.spawn('npm', ['run', 'dev'], { cwd: 'frontend', stdio: 'inherit' })
-  const serverProcess = childProcess.spawn('nodemon', ['server/index.mjs'], { stdio: 'inherit' })
+  const clientProcess = spawn('pnpm', ['run', 'dev'], { cwd: 'frontend', stdio: 'inherit' })
+  const serverProcess = spawn('nodemon', ['server/index.mjs'], { stdio: 'inherit' })
 
   // Handle process exits (important for graceful shutdown)
   clientProcess.on('exit', () => serverProcess.kill())
@@ -14,6 +14,7 @@ gulp.task('dev', (cb) => {
 })
 
 gulp.task('build', (cb) => {
-  const clientProcess = childProcess.spawn('npm', ['run', 'build'], { cwd: 'client', stdio: 'inherit' })
-  clientProcess.on('exit', cb)
+  const clientProcess = spawn('pnpm', ['run', 'build'], { cwd: 'frontend', stdio: 'inherit' })
+  clientProcess.on('exit', () => clientProcess.kill())
+  cb()
 })
