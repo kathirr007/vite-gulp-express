@@ -13,6 +13,11 @@ gulp.task('dev', (cb) => {
   cb() // Signal task completion
 })
 
+gulp.task('testTask', (cb) => {
+  console.log('Test task executed successfully!')
+  cb() // Signal task completion
+})
+
 gulp.task('build', (cb) => {
   const clientProcess = spawn('pnpm', ['run', 'build'], { cwd: 'frontend', stdio: 'inherit' })
   clientProcess.on('exit', () => clientProcess.kill())

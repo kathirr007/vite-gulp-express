@@ -2,8 +2,10 @@
 import axios from 'axios'
 
 onMounted(async () => {
+  const { data:data2 } = await axios.get('/api/run-test-task')
   const { data } = await axios.get('https://vite-gulp-express.onrender.com/api/hello')
   console.log(data)
+  console.log(data2)
 })
 </script>
 

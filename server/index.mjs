@@ -1,14 +1,33 @@
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { exec } from 'node:child_process'
 import cors from 'cors'
 import express from 'express'
 
-const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
-const __dirname = path.dirname(__filename) // get the name of the directory
-
 const app = express()
 app.use(cors())
+// eslint-disable-next-line node/prefer-global/process
 const PORT = process.env.PORT || 5000
+
+app.get('/', (req, res) => {
+  res.json({ message: 'Hello from Express api server..!' })
+})
+
+// Add this route to execute the 'testTask' gulp task
+app.get('/api/run-test-task', (req, res) => {
+  try {
+    exec('gulp testTask', (error, stdout, stderr) => {
+      if (error) {
+        res.status(500).json({ success: false, error: stderr || error.message })
+      }
+      else {
+        res.json({ success: true, output: stdout })
+      }
+    })
+  }
+  catch (error) {
+    console.error('Error executing gulp task:', error)
+    return res.status(500).json({ success: false, error: error.message })
+  }
+})
 
 app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello from Express running successfully..!' })
