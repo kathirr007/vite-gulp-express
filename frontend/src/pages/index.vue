@@ -34,6 +34,11 @@ function go() {
     />
 
     <div>
+      <button>
+        <RouterLink to="/optimize-image" class="m-3 text-sm btn">
+          Optimize Images
+        </RouterLink>
+      </button>
       <button
         class="m-3 text-sm btn"
         :disabled="!name"
