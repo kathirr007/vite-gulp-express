@@ -1,11 +1,13 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import cors from 'cors'
 import express from 'express'
 
 const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
 const __dirname = path.dirname(__filename) // get the name of the directory
 
 const app = express()
+app.use(cors())
 const PORT = process.env.PORT || 5000
 
 app.get('/api/hello', (req, res) => {

@@ -2,7 +2,7 @@
 import axios from 'axios'
 
 onMounted(async () => {
-  const { data } = await axios.get('/api/hello')
+  const { data } = await axios.get('https://vite-gulp-express.onrender.com/api/hello')
   console.log(data)
 })
 </script>
