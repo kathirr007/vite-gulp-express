@@ -75,9 +75,10 @@ export default defineConfig(({ mode }) => {
       proxy: {
         '/api': {
           target: isDev
-            ? 'http://localhost:5000' // Local Express backend
-            : env.VITE_API_BASE_URL || 'https://vite-gulp-express.onrender.com/api', // Production API base URL from .env
+            ? 'https://vite-gulp-express.onrender.com' // Local Express backend
+            : env.VITE_API_BASE_URL || 'https://vite-gulp-express.onrender.com', // Production API base URL from .env
           changeOrigin: true,
+          rewrite: path => path.replace(/^\/api/, ''),
         },
       },
     },

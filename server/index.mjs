@@ -18,8 +18,8 @@ app.get('/', (req, res) => {
   res.json({ message: 'Hello from Express api server..!' })
 })
 
-// POST /api/optimize-images
-app.post('/api/optimize-images', upload.array('images'), async (req, res) => {
+// POST /optimize-images
+app.post('/optimize-images', upload.array('images'), async (req, res) => {
   try {
     // 1. Move uploaded files to assets/img (overwrite or create as needed)
     const assetsImgDir = path.join(process.cwd(), 'assets', 'img')
@@ -65,7 +65,7 @@ app.post('/api/optimize-images', upload.array('images'), async (req, res) => {
 })
 
 // Add this route to execute the 'testTask' gulp task
-app.get('/api/run-test-task', (req, res) => {
+app.get('/run-test-task', (req, res) => {
   try {
     exec('gulp testTask', (error, stdout, stderr) => {
       if (error) {
@@ -82,7 +82,7 @@ app.get('/api/run-test-task', (req, res) => {
   }
 })
 
-app.get('/api/hello', (req, res) => {
+app.get('/hello', (req, res) => {
   res.json({ message: 'Hello from Express running successfully..!' })
 })
 
