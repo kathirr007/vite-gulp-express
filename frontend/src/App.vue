@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import axios from 'axios'
 import { onMounted } from 'vue'
+import { api } from './plugin/api'
 
 onMounted(async () => {
-  const { data:data2 } = await axios.get('/api/run-test-task')
-  const { data } = await axios.get('/api/hello')
+  const { data:data2 } = await api.get('/api/run-test-task')
+  const { data } = await api.get('/api/hello')
   console.log(data)
   console.log(data2)
 })

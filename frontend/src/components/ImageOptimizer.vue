@@ -1,6 +1,6 @@
-
 <script setup>
 import { ref } from 'vue'
+import { api } from '~/plugin/api'
 
 const files = ref([])
 const optimizedImages = ref([])
@@ -23,24 +23,19 @@ async function uploadImages() {
   files.value.forEach(file => formData.append('images', file))
 
   try {
-    const res = await fetch('/api/optimize-images', {
-      method: 'POST',
-      body: formData,
-    })
-    const data = await res.json()
+    const { data } = await api.post('/api/optimize-images', formData)
     if (data.success) {
       optimizedImages.value = data.images
     } else {
       error.value = data.error || 'Optimization failed'
     }
   } catch (err) {
-    error.value = err.message
+    error.value = err.response?.data?.error || err.message
   } finally {
     loading.value = false
   }
 }
 </script>
-
 
 <template>
   <div flex flex-col items-center>
