@@ -23,7 +23,7 @@ async function uploadImages() {
   files.value.forEach(file => formData.append('images', file))
 
   try {
-    const res = await fetch('http://localhost:5000/api/optimize-images', {
+    const res = await fetch('/api/optimize-images', {
       method: 'POST',
       body: formData,
     })

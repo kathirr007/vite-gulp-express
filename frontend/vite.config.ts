@@ -8,70 +8,78 @@ import Components from 'unplugin-vue-components/vite'
 import VueMacros from 'unplugin-vue-macros/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 import VueRouter from 'unplugin-vue-router/vite'
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 
-export default defineConfig({
-  resolve: {
-    alias: {
-      '~/': `${path.resolve(__dirname, 'src')}/`,
-    },
-  },
-  plugins: [
-    VueMacros({
-      defineOptions: false,
-      defineModels: false,
-      plugins: {
-        vue: Vue({
-          script: {
-            propsDestructure: true,
-            defineModel: true,
-          },
-        }),
+export default defineConfig(({ mode }) => {
+  // eslint-disable-next-line node/prefer-global/process
+  const env = loadEnv(mode, process.cwd())
+
+  const isDev = mode === 'development'
+  return {
+    resolve: {
+      alias: {
+        '~/': `${path.resolve(__dirname, 'src')}/`,
       },
-    }),
-
-    // https://github.com/posva/unplugin-vue-router
-    VueRouter(),
-
-    // https://github.com/antfu/unplugin-auto-import
-    AutoImport({
-      imports: [
-        'vue',
-        '@vueuse/core',
-        VueRouterAutoImports,
-        {
-          // add any other imports you were relying on
-          'vue-router/auto': ['useLink'],
+    },
+    plugins: [
+      VueMacros({
+        defineOptions: false,
+        defineModels: false,
+        plugins: {
+          vue: Vue({
+            script: {
+              propsDestructure: true,
+              defineModel: true,
+            },
+          }),
         },
-      ],
-      dts: true,
-      dirs: [
-        './src/composables',
-      ],
-      vueTemplate: true,
-    }),
+      }),
 
-    // https://github.com/antfu/vite-plugin-components
-    Components({
-      dts: true,
-    }),
+      // https://github.com/posva/unplugin-vue-router
+      VueRouter(),
 
-    // https://github.com/antfu/unocss
-    // see uno.config.ts for config
-    UnoCSS(),
-  ],
+      // https://github.com/antfu/unplugin-auto-import
+      AutoImport({
+        imports: [
+          'vue',
+          '@vueuse/core',
+          VueRouterAutoImports,
+          {
+          // add any other imports you were relying on
+            'vue-router/auto': ['useLink'],
+          },
+        ],
+        dts: true,
+        dirs: [
+          './src/composables',
+        ],
+        vueTemplate: true,
+      }),
 
-  // https://github.com/vitest-dev/vitest
-  test: {
-    environment: 'jsdom',
-  },
+      // https://github.com/antfu/vite-plugin-components
+      Components({
+        dts: true,
+      }),
 
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:5000', // Vite's default port
-        changeOrigin: true,
+      // https://github.com/antfu/unocss
+      // see uno.config.ts for config
+      UnoCSS(),
+    ],
+
+    // https://github.com/vitest-dev/vitest
+    test: {
+      environment: 'jsdom',
+    },
+
+    server: {
+      proxy: {
+        '/api': {
+          target: isDev
+            ? 'http://localhost:5000' // Local Express backend
+            : env.VITE_API_BASE_URL || 'https://vite-gulp-express.onrender.com/api', // Production API base URL from .env
+          changeOrigin: true,
+        },
       },
     },
-  },
+  }
 })
