@@ -1,4 +1,5 @@
 {
+  "name": "frontend",
   "type": "module",
   "private": true,
   "packageManager": "pnpm@10.4.1",
