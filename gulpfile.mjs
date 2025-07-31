@@ -1,13 +1,17 @@
-import { createRequire } from 'node:module'
+// import { createRequire } from 'node:module'
 import spawn from 'cross-spawn'
 
 import gulp from 'gulp'
+import gulpImage from 'gulp-image'
+import gulpNewer from 'gulp-newer'
+import gulpPlumber from 'gulp-plumber'
+import gulpSize from 'gulp-size'
 
-const require = createRequire(import.meta.url)
+/* const require = createRequire(import.meta.url)
 
 const $ = require('gulp-load-plugins')({
   lazy: true,
-})
+}) */
 
 // const loadGulpImage = async () => await import('gulp-image')
 
@@ -44,21 +48,19 @@ gulp.task('testTask', (cb) => {
 })
 
 // manage images
-gulp.task('optimize-images', async () => {
+gulp.task('optimize-images', () => {
   return (
     gulp
       .src(images.in)
       .pipe(
-        $.size.default({
+        gulpSize({
           title: 'images in ',
         }),
       )
-      .pipe($.newer(images.out))
-      .pipe($.plumber())
+      .pipe(gulpNewer(images.out))
+      .pipe(gulpPlumber())
       .pipe(
-        $.image.default({
-          // mozjpeg: ['-quality', 50, '-optimize', '-progressive'],
-          // guetzli: ['--quality', 84],
+        gulpImage({
           optipng: ['-i 1', '-strip all', '-fix', '-o7', '-force'],
           pngquant: ['--speed=1', '--force', 256],
           zopflipng: ['-y', '--lossy_8bit', '--lossy_transparent'],
@@ -70,7 +72,7 @@ gulp.task('optimize-images', async () => {
         }),
       )
       .pipe(
-        $.size.default({
+        gulpSize({
           title: 'images out ',
         }),
       )

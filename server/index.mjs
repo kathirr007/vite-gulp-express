@@ -40,6 +40,8 @@ app.post('/optimize-images', upload.array('images'), async (req, res) => {
 
       // 3. Read optimized images from builds/development/assets/img/
       const optimizedDir = path.join(process.cwd(), 'builds', 'development', 'assets', 'img')
+
+
       fs.readdir(optimizedDir, (err, files) => {
         if (err) {
           return res.status(500).json({ success: false, error: 'Could not read optimized images directory' })
