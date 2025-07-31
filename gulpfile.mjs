@@ -28,7 +28,7 @@ const images = {
 
 // Development task (runs client dev server and Express server concurrently)
 gulp.task('dev', (cb) => {
-  const clientProcess = spawn('pnpm', ['run', 'dev'], { cwd: 'frontend', stdio: 'inherit' })
+  const clientProcess = spawn('pnpm', ['run', 'dev'], { cwd: 'client', stdio: 'inherit' })
   const serverProcess = spawn('nodemon', ['server/index.mjs'], { stdio: 'inherit' })
 
   // Handle process exits (important for graceful shutdown)

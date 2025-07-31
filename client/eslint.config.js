@@ -6,4 +6,10 @@ export default antfu(
     formatters: true,
     pnpm: true,
   },
+  {
+    rules: {
+      'no-console': 'off',
+      'no-debugger': 'off',
+    },
+  },
 )
