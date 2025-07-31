@@ -24,7 +24,7 @@ async function uploadImages() {
   files.value.forEach(file => formData.append('images', file))
 
   try {
-    const { data } = await api.post('/optimize-images', formData)
+    const { data } = await api.post('/optimize', formData)
     if (data.success) {
       optimizedImages.value = data.images
     }
@@ -47,7 +47,7 @@ async function uploadImages() {
       Optimize Images
     </h2>
     <input type="file" multiple accept="image/*" @change="onFileChange">
-    <button class="m-3 btn text-sm" :disabled="!files.length || loading" @click="uploadImages">
+    <button class="text-sm btn m-3" :disabled="!files.length || loading" @click="uploadImages">
       {{ loading ? 'Optimizing...' : 'Optimize Images' }}
     </button>
 
@@ -56,7 +56,7 @@ async function uploadImages() {
       <div style="display: flex; flex-wrap: wrap; gap: 16px;">
         <div v-for="img in optimizedImages" :key="img.filename">
           <p>{{ img.filename }}</p>
-          <img :src="`data:image/*;base64,${img.data}`" style="max-width: 200px; max-height: 200px; height: 100%; width: 100%;" alt="">
+          <img :src="`data:image/*;base64,${img.base64}`" style="max-width: 200px; max-height: 200px; height: 100%; width: 100%;" alt="">
         </div>
       </div>
     </div>

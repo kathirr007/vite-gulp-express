@@ -2,9 +2,14 @@
 import { exec } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
+import { Duplex, Readable } from 'node:stream'
+import archiver from 'archiver'
 import cors from 'cors'
 import express from 'express'
+import gulpImage from 'gulp-image'
+import mime from 'mime-types'
 import multer from 'multer'
+import Vinyl from 'vinyl'
 
 const app = express()
 app.use(cors())
@@ -13,6 +18,11 @@ const PORT = process.env.PORT || 5000
 
 // Set up multer for file uploads (store in a temp folder)
 const upload = multer({ dest: 'uploads/' })
+const upload2 = multer()
+
+function bufferToStream(buffer) {
+  return Readable.from(buffer)
+}
 
 app.get('/', (req, res) => {
   res.json({ message: 'Hello from Express api server..!' })
@@ -41,7 +51,6 @@ app.post('/optimize-images', upload.array('images'), async (req, res) => {
       // 3. Read optimized images from builds/development/assets/img/
       const optimizedDir = path.join(process.cwd(), 'builds', 'development', 'assets', 'img')
 
-
       fs.readdir(optimizedDir, (err, files) => {
         if (err) {
           return res.status(500).json({ success: false, error: 'Could not read optimized images directory' })
@@ -64,6 +73,91 @@ app.post('/optimize-images', upload.array('images'), async (req, res) => {
   catch (err) {
     res.status(500).json({ success: false, error: err.message })
   }
+})
+
+app.post('/optimize2', upload2.array('images'), async (req, res) => {
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).send('No images uploaded.')
+  }
+
+  // Create Vinyl file stream with buffered contents
+  const vinylStream = new Duplex({ objectMode: true })
+  vinylStream._write = (file, _, done) => done()
+  vinylStream._read = () => { }
+
+  req.files.forEach((file) => {
+    const vinylFile = new Vinyl({
+      cwd: '/',
+      base: '/',
+      path: file.originalname,
+      contents: Buffer.from(file.buffer), // Use Buffer here
+    })
+    vinylStream.push(vinylFile)
+  })
+
+  vinylStream.push(null) // end the stream
+
+  // Set up ZIP archive for response
+  const archive = archiver('zip')
+  res.setHeader('Content-Type', 'application/zip')
+  res.setHeader('Content-Disposition', 'attachment; filename=optimized-images.zip')
+  archive.pipe(res)
+
+  // Gulp pipeline using gulp-image (buffered mode only)
+  vinylStream
+    .pipe(gulpImage())
+    .on('data', (file) => {
+      archive.append(file.contents, { name: path.basename(file.path) })
+    })
+    .on('end', () => archive.finalize())
+    .on('error', (err) => {
+      console.error('Image pipeline error:', err)
+      res.status(500).send('Image optimization failed.')
+    })
+})
+
+app.post('/optimize', upload2.array('images'), async (req, res) => {
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).json({ error: 'No images uploaded.' })
+  }
+
+  const vinylStream = new Duplex({ objectMode: true })
+  vinylStream._write = (file, _, done) => done()
+  vinylStream._read = () => { }
+
+  req.files.forEach((file) => {
+    const vinylFile = new Vinyl({
+      cwd: '/',
+      base: '/',
+      path: file.originalname,
+      contents: Buffer.from(file.buffer),
+    })
+    vinylStream.push(vinylFile)
+  })
+
+  vinylStream.push(null)
+
+  const optimizedImages = []
+
+  vinylStream
+    .pipe(gulpImage())
+    .on('data', (file) => {
+      const mimetype = mime.lookup(file.path) || 'application/octet-stream'
+      const base64 = file.contents.toString('base64')
+
+      optimizedImages.push({
+        filename: path.basename(file.path),
+        mimetype,
+        base64,
+      })
+    })
+    .on('end', () => {
+      res.json({ success: true, images: optimizedImages })
+    })
+    .on('error', (err) => {
+      console.error('Error:', err)
+      res.status(500).json({ success: false, error: 'Image optimization failed' })
+    })
 })
 
 // Add this route to execute the 'testTask' gulp task
