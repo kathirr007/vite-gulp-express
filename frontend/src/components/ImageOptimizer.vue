@@ -14,7 +14,8 @@ function onFileChange(e) {
 }
 
 async function uploadImages() {
-  if (!files.value.length) return
+  if (!files.value.length)
+    return
   loading.value = true
   error.value = ''
   optimizedImages.value = []
@@ -23,15 +24,18 @@ async function uploadImages() {
   files.value.forEach(file => formData.append('images', file))
 
   try {
-    const { data } = await api.post('/api/optimize-images', formData)
+    const { data } = await api.post('/optimize-images', formData)
     if (data.success) {
       optimizedImages.value = data.images
-    } else {
+    }
+    else {
       error.value = data.error || 'Optimization failed'
     }
-  } catch (err) {
+  }
+  catch (err) {
     error.value = err.response?.data?.error || err.message
-  } finally {
+  }
+  finally {
     loading.value = false
   }
 }
@@ -39,9 +43,11 @@ async function uploadImages() {
 
 <template>
   <div flex flex-col items-center>
-    <h2 class="text-xl font-medium">Optimize Images</h2>
-    <input type="file" multiple accept="image/*" @change="onFileChange" />
-    <button class="m-3 text-sm btn" :disabled="!files.length || loading" @click="uploadImages">
+    <h2 class="text-xl font-medium">
+      Optimize Images
+    </h2>
+    <input type="file" multiple accept="image/*" @change="onFileChange">
+    <button class="m-3 btn text-sm" :disabled="!files.length || loading" @click="uploadImages">
       {{ loading ? 'Optimizing...' : 'Optimize Images' }}
     </button>
 
@@ -50,10 +56,12 @@ async function uploadImages() {
       <div style="display: flex; flex-wrap: wrap; gap: 16px;">
         <div v-for="img in optimizedImages" :key="img.filename">
           <p>{{ img.filename }}</p>
-          <img :src="`data:image/*;base64,${img.data}`" style="max-width: 200px; max-height: 200px; height: 100%; width: 100%;" alt="" />
+          <img :src="`data:image/*;base64,${img.data}`" style="max-width: 200px; max-height: 200px; height: 100%; width: 100%;" alt="">
         </div>
       </div>
     </div>
-    <div v-if="error" style="color: red;">{{ error }}</div>
+    <div v-if="error" style="color: red;">
+      {{ error }}
+    </div>
   </div>
 </template>

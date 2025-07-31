@@ -63,7 +63,9 @@ export default defineConfig(({ mode }) => {
 
       // https://github.com/antfu/unocss
       // see uno.config.ts for config
-      UnoCSS(),
+      UnoCSS({
+        configFile: path.resolve(__dirname, 'uno.config.ts'),
+      }),
     ],
 
     // https://github.com/vitest-dev/vitest

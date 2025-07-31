@@ -5,7 +5,7 @@ const router = useRouter()
 
 <template>
   <div>
-    <div i-carbon-pedestrian inline-block text-4xl />
+    <div text-4xl inline-block i-carbon-pedestrian />
     <p>
       Hi, {{ params.name }}
     </p>
@@ -14,7 +14,7 @@ const router = useRouter()
     </p>
 
     <div>
-      <button m-3 mt-8 btn text-sm @click="router.back()">
+      <button text-sm m-3 btn mt-8 @click="router.back()">
         Back
       </button>
     </div>
