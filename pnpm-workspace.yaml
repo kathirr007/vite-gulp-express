@@ -1,5 +1,5 @@
 packages:
-  - client
+  - frontend
   - server
 catalog:
   '@antfu/eslint-config': ^5.0.0

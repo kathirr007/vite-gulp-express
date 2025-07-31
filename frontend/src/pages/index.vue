@@ -14,7 +14,7 @@ function go() {
 
 <template>
   <div>
-    <div i-carbon-campsite inline-block text-4xl />
+    <div i-carbon-campsite text-4xl inline-block />
     <p>
       <a rel="noreferrer" href="https://github.com/antfu-collective/vitesse-lite" target="_blank">
         Vitesse Lite
@@ -35,12 +35,12 @@ function go() {
 
     <div>
       <button>
-        <RouterLink to="/optimize-image" class="m-3 btn text-sm">
+        <RouterLink to="/optimize-image" class="text-sm m-3 btn">
           Optimize Images
         </RouterLink>
       </button>
       <button
-        class="m-3 btn text-sm"
+        class="text-sm m-3 btn"
         :disabled="!name"
         @click="go"
       >

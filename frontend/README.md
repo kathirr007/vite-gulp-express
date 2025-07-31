@@ -12,6 +12,11 @@
 
 <br>
 
+<p align='center'>
+<b>English</b> | <a href="https://github.com/antfu-collective/vitesse-lite/blob/main/README.zh-CN.md">简体中文</a>
+<!-- Contributors: Thanks for geting interested, however we DON'T accept new transitions to the README, thanks. -->
+</p>
+
 ## Features
 
 - ⚡️ [Vue 3](https://github.com/vuejs/core), [Vite](https://github.com/vitejs/vite), [pnpm](https://pnpm.io/), [ESBuild](https://github.com/evanw/esbuild) - born with fastness
@@ -68,16 +73,14 @@ See [Vitesse](https://github.com/antfu/vitesse) for full featureset.
 
 ### GitHub Template
 
-[Create a repo from this template on GitHub](https://github.com/kathirr007/vite-gulp-express/generate).
+[Create a repo from this template on GitHub](https://github.com/antfu-collective/vitesse-lite/generate).
 
 ### Clone to local
 
 If you prefer to do it manually with the cleaner git history
 
 ```bash
-npx degit kathirr007/vite-gulp-express my-vitesse-app
+npx degit antfu-collective/vitesse-lite my-vitesse-app
 cd my-vitesse-app
 pnpm i # If you don't have pnpm installed, run: npm install -g pnpm
 ```
-
-Last Updated: 2025-02-19 12:41:14
