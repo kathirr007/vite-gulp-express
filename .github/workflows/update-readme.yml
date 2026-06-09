@@ -11,7 +11,7 @@ jobs:
   update-readme:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - name: Set up the script permission
         run: chmod +x update_readme.sh
