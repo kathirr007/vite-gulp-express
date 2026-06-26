@@ -8,4 +8,4 @@ A fullstack app using vite, vue, gulp and express
 - Gulp - for task runner
 - Express - for simple backend api
 
-Last Updated: 2026-06-25 01:54:58
+Last Updated: 2026-06-26 01:56:49
